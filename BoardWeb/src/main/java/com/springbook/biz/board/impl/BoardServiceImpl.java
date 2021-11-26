@@ -13,7 +13,7 @@ import com.springbook.biz.common.Log4jAdvice;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAOSpring boardDAO;
 	
 
 	public void insertBoard(BoardVo vo) {

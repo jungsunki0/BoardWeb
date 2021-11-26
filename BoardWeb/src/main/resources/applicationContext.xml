@@ -7,22 +7,41 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+		
+	<!-- DataSource 설정  -->
+	<context:property-placeholder location="classpath:config/database.properties" />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- Spring JDBC 설정  -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 	
 	<context:component-scan base-package="com.springbook.biz">
 	</context:component-scan>
 	
-	<bean id="afterReturning" class="com.springbook.biz.common.AfterReturningAdvice"></bean>
+	<!-- 
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	 -->
+	
+	<!-- AOP XML 설정 
+	<bean id="around" class="com.springbook.biz.common.AroundAdvice"></bean>
 	
 	<aop:config>
-		<aop:pointcut id="getPointcut" 
-			expression="execution(* com.springbook.biz..*Impl.get*(..))" />
+		<aop:pointcut id="allPoint" 
+			expression="execution(* com.springbook.biz..*Impl.*(..))" />
 			
 
-		<aop:aspect ref="afterReturning">
-			<aop:after-returning pointcut-ref="getPointcut" method="afterLog" returning="returnObj"/>
+		<aop:aspect ref="around">
+			<aop:around pointcut-ref="allPoint" method="aroundLog" />
 		</aop:aspect>
 	
-	</aop:config>
+	</aop:config> -->
 	
 </beans>

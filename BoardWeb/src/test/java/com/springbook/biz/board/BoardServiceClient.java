@@ -19,7 +19,7 @@ public class BoardServiceClient {
 		BoardVo vo = new BoardVo();
 		vo.setTitle("임시 제목");
 		vo.setWriter("홍길동");
-		vo.setContent("임시 내용 입니다아3");
+		vo.setContent("임시 내용 입니다아1212");
 		boardService.insertBoard(vo);
 		
 		//4. 글 목록 검색 기능 테스트
